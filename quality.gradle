@@ -1,7 +1,6 @@
 apply plugin: 'jacoco'
 
 def fileFilter = [
-        'com/androidjacoco/sample/**/view/**.*',
         '**/R.class',
         '**/R$*.class',
         '**/BuildConfig.*',
@@ -19,13 +18,15 @@ tasks.register('customJacocoTestReport', JacocoReport) {
     reports {
         html.getRequired().set(true)
         html.getOutputLocation().set(file("${buildDir}/reports/jacoco"))
+        csv.getRequired().set(true)
+        csv.getOutputLocation().set(file("${buildDir}/reports/jacoco/report.csv"))
     }
 
     sourceDirectories.setFrom([mainSrc])
     classDirectories.setFrom([debugTree])
     executionData.setFrom(fileTree(dir: "$buildDir", includes: [
             "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
+//            "outputs/code-coverage/connected/*coverage.ec"
     ]))
 }
 
@@ -36,7 +37,7 @@ tasks.register('customJacocoTestCoverageVerification', JacocoCoverageVerificatio
     classDirectories.setFrom([debugTree])
     executionData.setFrom(fileTree(dir: "$buildDir", includes: [
             "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
+//            "outputs/code-coverage/connected/*coverage.ec"
     ]))
 
 
