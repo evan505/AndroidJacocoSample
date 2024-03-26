@@ -1,35 +1,43 @@
 apply plugin: 'jacoco'
 
-
-jacoco {
-    toolVersion = "0.7.7.201606060606"
-}
-
 def fileFilter = [
         'com/androidjacoco/sample/**/view/**.*',
-        '**/R.class', '**/R$*.class', '**/BuildConfig.*',
-        '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+        '**/R.class',
+        '**/R$*.class',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Test*.*',
+        'android/**/*.*'
+]
 def debugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter)
 def mainSrc = "${project.projectDir}/src/main/java"
 
 
-task customJacocoTestReport(type: JacocoReport, dependsOn: 'test') {
+tasks.register('customJacocoTestReport', JacocoReport) {
+    dependsOn 'test'
 
     reports {
-        html.enabled = true
-        html.destination = "${buildDir}/reports/jacoco"
+        html.getRequired().set(true)
+        html.getOutputLocation().set(file("${buildDir}/reports/jacoco"))
     }
 
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+    sourceDirectories.setFrom([mainSrc])
+    classDirectories.setFrom([debugTree])
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 }
 
-task customJacocoTestCoverageVerification(type: JacocoCoverageVerification, dependsOn: 'customJacocoTestReport') {
+tasks.register('customJacocoTestCoverageVerification', JacocoCoverageVerification) {
+    dependsOn 'customJacocoTestReport'
 
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+    sourceDirectories.setFrom([mainSrc])
+    classDirectories.setFrom([debugTree])
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 
 
     violationRules {
