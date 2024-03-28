@@ -1,0 +1,33 @@
+apply plugin: 'jacoco'
+apply plugin: 'com.form.diff-coverage'
+
+def fileFilter = [
+        '**/R.class',
+        '**/R$*.class',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Test*.*',
+        'android/**/*.*'
+]
+def classesTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter)
+def mainSrc = "${project.projectDir}/src/main/java"
+
+
+diffCoverageReport {
+    diffSource {
+        git.compareWith 'HEAD~1'
+    }
+
+    jacocoExecFiles = files("$buildDir/jacoco/testDebugUnitTest.exec")
+    srcDirs = files(mainSrc)
+    classesDirs = files("${buildDir}/intermediates/javac/debug")
+
+    reports {
+        html = true
+        xml = true
+        csv = true
+    }
+
+//    violationRules.failIfCoverageLessThan 0.1
+}
+diffCoverage.dependsOn += check

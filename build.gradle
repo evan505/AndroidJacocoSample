@@ -4,6 +4,7 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url 'https://maven.google.com' }
+        maven { url 'https://jitpack.io' }
         mavenLocal()
     }
     dependencies {
@@ -11,7 +12,10 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        //custom ut plugin by zhangyifan
         classpath "com.bilibili.yst:code-coverage-plugin:0.0.1-c"
+
+        classpath 'com.github.form-com.diff-coverage-gradle:diff-coverage:0.9.5'
     }
 }
 
