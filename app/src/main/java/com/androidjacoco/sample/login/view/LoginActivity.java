@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +20,7 @@ import com.androidjacoco.sample.login.presenter.LoginPresenter;
 import com.androidjacoco.sample.main.view.MainActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -87,6 +89,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void showLoginError() {
         loginInput.setError("Login is not valid");
+    }
+
+    @Override
+    public void showPasswordTooSimple() {
+        Toast.makeText(this, "password is too simple", Toast.LENGTH_LONG).show();
     }
 
     @Override

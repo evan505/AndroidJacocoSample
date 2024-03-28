@@ -13,6 +13,8 @@ public interface ILoginView {
 
     void showLoginError();
 
+    void showPasswordTooSimple();
+
     String getLogin();
 
     String getPassword();

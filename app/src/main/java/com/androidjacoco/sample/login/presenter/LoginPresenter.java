@@ -2,6 +2,7 @@ package com.androidjacoco.sample.login.presenter;
 
 import com.androidjacoco.sample.login.data.ILoginService;
 import com.androidjacoco.sample.login.view.ILoginView;
+
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
@@ -30,6 +31,11 @@ public class LoginPresenter {
         String pass = loginView.getPassword();
         if (!validateLogin(login)) {
             loginView.showLoginError();
+            return;
+        }
+
+        if (validateTooSimplePassword(login)) {
+            loginView.showPasswordTooSimple();
             return;
         }
         if (!validatePass(pass)) {
@@ -75,6 +81,10 @@ public class LoginPresenter {
 
     boolean validateLogin(CharSequence login) {
         return !(login == null || login.length() <= 3 || login.length() > 15);
+    }
+
+    boolean validateTooSimplePassword(CharSequence login) {
+        return login.equals("123456");
     }
 
     public void addLoginInput(Observable<CharSequence> logintextViewText) {
