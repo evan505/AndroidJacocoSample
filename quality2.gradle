@@ -15,7 +15,7 @@ def mainSrc = "${project.projectDir}/src/main/java"
 
 diffCoverageReport {
     diffSource {
-        git.compareWith 'HEAD~1'
+        git.compareWith '9b72938b9605e684c1b65e1c3433b4a30ab5d772'
     }
 
     jacocoExecFiles = files("$buildDir/jacoco/testDebugUnitTest.exec")

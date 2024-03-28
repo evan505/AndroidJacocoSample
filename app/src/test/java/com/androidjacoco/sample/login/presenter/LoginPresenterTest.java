@@ -2,8 +2,11 @@ package com.androidjacoco.sample.login.presenter;
 
 import com.androidjacoco.sample.login.data.ILoginService;
 import com.androidjacoco.sample.login.view.ILoginView;
+
 import io.reactivex.schedulers.Schedulers;
+
 import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -30,6 +33,14 @@ public class LoginPresenterTest {
         Assert.assertEquals(true, presenter.validateLogin("1234567891234"));
         Assert.assertEquals(false, presenter.validateLogin("1234567891234567"));
     }
+
+    @Test
+    public void validateSimple() {
+        Assert.assertEquals(false, presenter.validateTooSimplePassword("123"));
+        Assert.assertEquals(true, presenter.validateTooSimplePassword("123456"));
+        Assert.assertEquals(false, presenter.validateTooSimplePassword("1234567891234"));
+    }
+
 
     @Test
     public void validatePass() {
