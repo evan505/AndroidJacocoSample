@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply from: "$rootProject.projectDir/quality.gradle"
-apply plugin: 'jacoco'
 
 android {
     compileSdk 31
