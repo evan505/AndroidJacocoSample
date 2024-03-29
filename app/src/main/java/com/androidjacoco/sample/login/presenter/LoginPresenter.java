@@ -87,6 +87,10 @@ public class LoginPresenter {
         return login.equals("123456");
     }
 
+    boolean validateArea(CharSequence login) {
+        return login.equals("china");
+    }
+
     public void addLoginInput(Observable<CharSequence> logintextViewText) {
         logintextViewText.subscribe(new Consumer<CharSequence>() {
             @Override
